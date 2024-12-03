@@ -30,3 +30,5 @@ Frontend:
   - Community page? (this might populate a list of recently commented on movies, recent ratings, etc.)
   - What to Watch page (see line 11)
 
+Tier 3 ideas:
+  - pull rotten tomatoes ratings 
