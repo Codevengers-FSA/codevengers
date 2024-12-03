@@ -15,11 +15,11 @@ const prisma = new PrismaClient();
 const main =  async () => {
   const movies = [
       // Combine the movie data from all phases into a single array with spread operator (`...`)
-    ...Object.values(phase1),
-    ...Object.values(phase2),
-    ...Object.values(phase3),
-    ...Object.values(phase4),
-    ...Object.values(phase5),
+      ...phase1,
+      ...phase2,
+      ...phase3,
+      ...phase4,
+      ...phase5,
   ];
 
   
@@ -31,7 +31,6 @@ const main =  async () => {
         ratings: movie.ratings,
         summary: movie.summary,
         image: movie.image,
-        watchlist: movie.watchlist,
       },
     });
   }
