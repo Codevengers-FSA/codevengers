@@ -6,7 +6,7 @@ const phase1 = require(`./phases/phase1`);
 const phase2 = require(`./phases/phase2`);
 const phase3 = require(`./phases/phase3`);
 const phase4 = require(`./phases/phase4`);
-const phase5 = require(`./phases/phase4`)
+const phase5 = require(`./phases/phase4`);
 
 // Initiate the Prisma client
 const prisma = new PrismaClient();
