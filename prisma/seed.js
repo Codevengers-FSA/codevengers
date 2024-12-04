@@ -1,5 +1,5 @@
 // Import the PrismaClient
-const { PrismaClient } = require(`@prisma/client`);
+const prisma = require("../prisma");
 
 // Import the data for Phase 1 and Phase 2 movies
 const phase1 = require(`./phases/phase1`);
@@ -8,8 +8,8 @@ const phase3 = require(`./phases/phase3`);
 const phase4 = require(`./phases/phase4`);
 const phase5 = require(`./phases/phase4`)
 
-// Initiate the Prisma client
-const prisma = new PrismaClient();
+
+
 
 // Main seeding function 
 const main =  async () => {
