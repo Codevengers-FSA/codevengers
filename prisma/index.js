@@ -5,13 +5,13 @@ const prisma = new PrismaClient().$extends({
     user: {
       async register(username, password) {
         const hash = await bcrypt.hash(password, 10);
-        const user = await PrismaClient.user.create({
+        const user = await prisma.user.create({
           data: {username, password: hash},
         });
         return user;
       },
       async login(username, password) {
-        const user = await Prisma.user.findUniqueOrThrow({
+        const user = await prisma.user.findUniqueOrThrow({
           where: {username},
         });
         const valid = await bcrypt.compare(password, user.password);
