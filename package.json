@@ -13,6 +13,11 @@
     "seed": "node prisma/seed.js"
   },
   "scripts": {
-    "dev": "nodemon server.js"
-  }
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "build": "prisma generate"
+  },
+  "engines": {
+  "node": ">=20.16.0"
+  } 
 }
