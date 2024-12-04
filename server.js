@@ -8,6 +8,8 @@ app.use(express.json());
 
 // leave API routes here
 
+app.use(require("./api/auth").router);
+
 app.use((req, res, next) => {
   next({status: 404, message: "Endpoint not found"});
 });
