@@ -33,7 +33,7 @@ model User{
 
 model Movie {
   id Int @id @default (autoincrement())
-  title String
+  title String @unique
   summary String
   ratings String
   image String
