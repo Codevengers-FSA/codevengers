@@ -20,21 +20,20 @@ Content-Type: application/json
 }
 
 ### Get all movies 
-GET {{host}}/
+GET {{host}}/movies
 
 ### Get movie by ID
-GET {{host}}/3
+GET {{host}}/movies/3
 
 ### View all watchlists
 GET {{host}}/watchlists
 
 ### Create a watchlist 
 POST {{host}}/watchlists
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}
 Content-Type: application/json 
 {
     "name":"My favorite movies",
     "description": "all of my favorite movies",
     "movieIds": [1, 2, 3]
-
 }
