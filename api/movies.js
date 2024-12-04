@@ -13,3 +13,15 @@ router.get("/", async(req, res, next) =>{
         }
 });
 
+router.get("/:id", async (req, res, next) =>{
+    const { id } = req.params;
+    try {
+        const movie = await prisma.movie.findUniqueOrThrow({
+            where: { id: +id },
+        });
+        res.json(movie);
+    } catch(e) {
+        next(e);
+    }
+});
+
