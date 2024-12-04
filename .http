@@ -1,0 +1,40 @@
+@host = http://localhost:3000
+
+### Register as a user
+POST {{host}}/register
+Content-Type: application/json
+
+{
+    "username":"iLuvMarvel",
+    "password":"1234"
+}
+
+### Login
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "username": "iLuvMarvel", 
+    "password": "1234"
+}
+
+### Get all movies 
+GET {{host}}/
+
+### Get movie by ID
+GET {{host}}/3
+
+### View all watchlists
+GET {{host}}/watchlists
+
+### Create a watchlist 
+POST {{host}}/watchlists
+Authorization: Bearer {{token}}
+Content-Type: application/json 
+{
+    "name":"My favorite movies",
+    "description": "all of my favorite movies",
+    "movieIds": [1, 2, 3]
+
+}
