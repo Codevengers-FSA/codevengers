@@ -1,11 +1,16 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middlewares
 app.use(require("morgan")("dev"));
 app.use(express.json());
+
+// Handle the base route with a welcome message
+app.get("/", (req, res) => {
+  res.send("Welcome to the Marvel API! Use /movies or /auth for valid routes.");
+});
 
 // Import the movie routes
 const movieRoutes = require("./api/movies");
