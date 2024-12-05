@@ -19,6 +19,11 @@ Content-Type: application/json
     "password": "1234"
 }
 
+### Get all users 
+GET {{host}}/users
+
+### Get a user by id
+GET {{host}}/users/6
 ### Get all movies 
 GET {{host}}/movies
 

@@ -7,6 +7,10 @@ const PORT = 3000;
 app.use(require("morgan")("dev"));
 app.use(express.json());
 
+const usersRoutes = require("./api/users");
+
+app.use("/users", usersRoutes);
+
 // Import the movie routes
 const movieRoutes = require("./api/movies");
 
