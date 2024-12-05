@@ -22,6 +22,10 @@ const movieRoutes = require("./api/movies");
 // Use the movie routes for the '/movies' path
 app.use("/movies", movieRoutes);
 
+const usersRoutes = require("./api/users");
+
+app.use("/users", usersRoutes);
+
 // Authentication routes
 app.use(require("./api/auth").router);
 
