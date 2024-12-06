@@ -14,20 +14,20 @@ datasource db {
 }
 
 model User {
-  id         Int         @id @default(autoincrement())
-  username   String      @unique
-  password   String
-  watchlists Watchlist[]
+  id                 Int         @id @default(autoincrement())
+  username           String      @unique
+  password           String
+  watchlists         Watchlist[]
 }
 
 model Watchlist {
-  id Int @id @default(autoincrement())
+  id                 Int         @id @default(autoincrement())
 
-  title   String
-  movie   Movie  @relation(fields: [movieId], references: [id])
-  movieId Int
+  title              String
+  movie              Movie       @relation(fields: [movieId], references: [id])
+  movieId            Int
 
-  owner              User @relation(fields: [ownerId], references: [id])
+  owner              User        @relation(fields: [ownerId], references: [id])
   ownerId            Int
   chronologicalOrder Int
 }
