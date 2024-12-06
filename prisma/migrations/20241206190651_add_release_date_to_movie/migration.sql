@@ -1,0 +1,2 @@
+ALTER TABLE "Movie" ADD COLUMN "releaseDate" TIMESTAMP DEFAULT NOW();
+ALTER TABLE "Movie" ADD COLUMN "chronologicalOrder" INT DEFAULT 0;
