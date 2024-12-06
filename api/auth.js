@@ -50,6 +50,8 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
+  console.log("Login attempt with:", { username, password });
+
   try {
     const user = await prisma.user.findUnique({ where: { username } });
     if (!user) {
