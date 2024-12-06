@@ -25,7 +25,7 @@ router.use(async (req, res, next) => {
   }
 });
 
-router.post("/register", async (req, res, next) => {
+router.post("/auth/register", async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const existingUser = await prisma.user.findUnique({ where: { username } });
@@ -48,7 +48,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-router.post("/login", async (req, res, next) => {
+router.post("/auth/login", async (req, res, next) => {
   const { username, password } = req.body;
   console.log("Login attempt with:", { username, password });
 
