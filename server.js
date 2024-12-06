@@ -27,7 +27,14 @@ const usersRoutes = require("./api/users");
 app.use("/users", usersRoutes);
 
 // Authentication routes
+
+const userRoutes = require("./api/auth")
+
 app.use(require("./api/auth").router);
+
+app.use(require("/login", userRoutes))
+
+app.use(require("/register", userRoutes))
 
 // 404 Error Handling
 app.use((req, res, next) => {
