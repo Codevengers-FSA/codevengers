@@ -33,7 +33,7 @@ app.use("/auth/login", authRoutes)
 app.use("/auth/register", authRoutes)
 
 // Commenting routes
-const commentsRouter = require('./routes/commentsRouter');
+const commentsRouter = require('./api/comments');
 app.use("/comments", commentsRouter);
 
 // 404 Error Handling

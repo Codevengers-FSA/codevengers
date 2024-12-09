@@ -30,6 +30,30 @@ GET {{host}}/movies
 ### Get movie by ID
 GET {{host}}/movies/3
 
+### Get comments for a movie
+GET {{host}}/comments/movies/1/comments
+
+### Post a new comment
+POST {{host}}/comments/movies/1/comments
+Content-Type: application/json
+
+{
+  "userId": 6,
+  "text": "This is an amazing movie!",
+  "parentId": null
+}
+
+### Update a comment
+PUT {{host}}/comments/comments/1
+Content-Type: application/json
+
+{
+  "text": "I changed my mind when I got to the end"
+}
+
+### Delete a comment
+DELETE {{host}}/comments/comments/1
+
 # ### View all watchlists
 # GET {{host}}/watchlists
 
