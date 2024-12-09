@@ -18,15 +18,14 @@ model User {
   username           String      @unique
   password           String
   watchlists         Watchlist[]
+  comments           Comment[]   
 }
 
 model Watchlist {
   id                 Int         @id @default(autoincrement())
-
   title              String
   movie              Movie       @relation(fields: [movieId], references: [id])
   movieId            Int
-
   owner              User        @relation(fields: [ownerId], references: [id])
   ownerId            Int
   chronologicalOrder Int
@@ -39,6 +38,20 @@ model Movie {
   ratings            String
   image              String
   watchlists         Watchlist[]
+  comments           Comment[]
   releaseDate        DateTime
   chronologicalOrder Int
+}
+
+model Comment {
+  id                 Int       @id @default(autoincrement())
+  movieId            Int
+  movie              Movie     @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  userId             Int?     
+  user               User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  text               String
+  parentId           Int?     
+  parent             Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies            Comment[] @relation("CommentReplies")
+  createdAt          DateTime  @default(now())
 }

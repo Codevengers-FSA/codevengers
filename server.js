@@ -22,8 +22,8 @@ const movieRoutes = require("./api/movies");
 // Use the movie routes for the '/movies' path
 app.use("/movies", movieRoutes);
 
+// Users routes
 const usersRoutes = require("./api/users");
-
 app.use("/users", usersRoutes);
 
 // Authentication routes
@@ -31,6 +31,10 @@ const authRoutes = require("./api/auth").router;
 app.use("/auth", authRoutes);
 // app.use("/auth/login", authRoutes)
 // app.use("/auth/register", authRoutes)
+
+// Commenting routes
+const commentsRouter = require('./api/comments');
+app.use("/comments", commentsRouter);
 
 // 404 Error Handling
 app.use((req, res, next) => {
