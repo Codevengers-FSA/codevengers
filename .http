@@ -54,15 +54,18 @@ Content-Type: application/json
 ### Delete a comment
 DELETE {{host}}/comments/comments/1
 
-# ### View all watchlists
-# GET {{host}}/watchlists
+### Get a user's watchlist
+GET {{host}}/watchlist/1
 
-# ### Create a watchlist 
-# POST {{host}}/watchlists
-# # Authorization: Bearer {{token}}
-# Content-Type: application/json 
-# {
-#     "name":"My favorite movies",
-#     "description": "all of my favorite movies",
-#     "movieIds": [1, 2, 3]
-# }
+### Add a movie to the user's watchlist
+POST {{host}}/watchlist
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "movieId": 3,
+    "title": "Iron Man 2"
+}
+
+### Remove a movie from the user's watchlist
+DELETE {{host}}/watchlist/
