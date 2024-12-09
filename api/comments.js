@@ -59,4 +59,24 @@ router.delete('/comments/:id', async (req, res, next) => {
   }
 });
 
+router.post('/movies/:movieId/comments/:commentId/replies', async (req, res, next) => {
+  const { movieId, commentId } = req.params;
+  const { userId, text } = req.body;
+
+  try {
+    const newReply = await prisma.comment.create({
+      data: {
+        movieId: parseInt(movieId, 10),
+        userId,
+        text,
+        parentId: parseInt(commentId, 10),
+      },
+    });
+    res.status(201).json(newReply);
+  } catch (e) {
+    next(e);
+  }
+});
+
+
 module.exports = router;
