@@ -36,6 +36,10 @@ app.use("/auth", authRoutes);
 const commentsRouter = require('./api/comments');
 app.use("/comments", commentsRouter);
 
+// Watchlist routes
+const watchlistRouter = require("./api/watchlist");
+app.use("/watchlist", watchlistRouter);
+
 // 404 Error Handling
 app.use((req, res, next) => {
   next({ status: 404, message: "Endpoint not found" });

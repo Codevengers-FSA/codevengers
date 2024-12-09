@@ -28,7 +28,6 @@ model Watchlist {
   movieId            Int
   owner              User        @relation(fields: [ownerId], references: [id])
   ownerId            Int
-  chronologicalOrder Int
 }
 
 model Movie {
