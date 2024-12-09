@@ -25,7 +25,7 @@ router.use(async (req, res, next) => {
   }
 });
 
-router.post("/auth/register", async (req, res, next) => {
+router.post("/register", async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const existingUser = await prisma.user.findUnique({ where: { username } });
@@ -48,19 +48,17 @@ router.post("/auth/register", async (req, res, next) => {
   }
 });
 
-router.post("/auth/login", async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
-  console.log("Login attempt with:", { username, password });
-
   try {
     const user = await prisma.user.findUnique({ where: { username } });
     if (!user) {
-      return res.status(401).json({ error: "Invalid username or password" });
+      return res.status(401).json({ error: "Invalid username" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: "Invalid username or password" });
+      return res.status(401).json({ error: "Invalid password" });
     }
 
     const token = createToken(user.id);

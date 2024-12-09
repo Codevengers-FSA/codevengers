@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const prisma = require("../prisma");
 
 // Import movie data from phases
 const phase1 = require("../prisma/phases/phase1");
@@ -10,8 +11,6 @@ const phase5 = require("../prisma/phases/phase5");
 
 // Combine the movie data from all phases into a single array
 const allMovies = [...phase1, ...phase2, ...phase3, ...phase4, ...phase5];
-
-const prisma = require("../prisma");
 
 router.get("/", async (req, res, next) => {
   try {
