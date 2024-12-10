@@ -6,9 +6,7 @@ const cors = require(`cors`);
 
 // CORS handling
 app.use(cors({
-  origin: 'https://codevengers.netlify.app',  // Allow this domain to access the backend
-  allowedHeaders: ['Content-Type', 'Authorization'],  // Ensure the Authorization header is allowed
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']  // Allow necessary HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization']  // Allow Authorization header
 }));
 
 app.options('*', cors());
