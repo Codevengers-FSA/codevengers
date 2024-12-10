@@ -5,7 +5,9 @@ const PORT = process.env.PORT || 3000;
 const cors = require(`cors`);
 
 // CORS handling
-app.use(cors());
+app.use(cors({
+  allowedHeaders: ['Content-Type', 'Authorization']  // Allow Authorization header
+}));
 
 // Middlewares
 app.use(require("morgan")("dev"));
