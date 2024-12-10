@@ -8,8 +8,10 @@ const authenticateUser = (req, res, next) => {
   if (!token) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
-    const user = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = user;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Decoded token:', decoded);
+
+    req.user = decoded;
     next();
   } catch (err) {
     res.status(403).json({ error: 'Invalid token.' });
