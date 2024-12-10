@@ -29,8 +29,6 @@ app.use("/users", usersRoutes);
 // Authentication routes
 const authRoutes = require("./api/auth").router;
 app.use("/auth", authRoutes);
-// app.use("/auth/login", authRoutes)
-// app.use("/auth/register", authRoutes)
 
 // Commenting routes
 const commentsRouter = require('./api/comments');
@@ -39,6 +37,10 @@ app.use("/comments", commentsRouter);
 // Watchlist routes
 const watchlistRouter = require("./api/watchlist");
 app.use("/watchlist", watchlistRouter);
+
+// Ratings routes
+const ratingsRouter = require("./api/ratings");
+app.use("/ratings", ratingsRouter);
 
 // 404 Error Handling
 app.use((req, res, next) => {
