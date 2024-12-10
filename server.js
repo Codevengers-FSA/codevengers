@@ -6,7 +6,8 @@ const cors = require(`cors`);
 
 // CORS handling
 app.use(cors({
-  allowedHeaders: ['Content-Type', 'Authorization']  // Allow Authorization header
+  origin: ['http://localhost:5173', 'https://codevengers-backend.onrender.com'],  // Allow both frontend and backend
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Middlewares
