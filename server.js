@@ -6,8 +6,12 @@ const cors = require(`cors`);
 
 // CORS handling
 app.use(cors({
-  allowedHeaders: ['Content-Type', 'Authorization']  // Allow Authorization header
+  origin: 'https://codevengers.netlify.app',  // Allow this domain to access the backend
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Ensure the Authorization header is allowed
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']  // Allow necessary HTTP methods
 }));
+
+app.options('*', cors());
 
 // Middlewares
 app.use(require("morgan")("dev"));
