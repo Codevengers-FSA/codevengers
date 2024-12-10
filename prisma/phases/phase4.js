@@ -1,6 +1,6 @@
 const phase4 = [
     {
-        ratings: " 79% on Rotten Tomatoes",
+        ratings: [],
         watchlists: [],
         title: "Black Widow",
         summary: "In Marvel Studios' action-packed spy thriller 'Black Widow',  Natasha Romanoff aka Black Widow confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy and the broken relationships left in her wake long before she became an Avenger. ",
@@ -9,7 +9,7 @@ const phase4 = [
         chronologicalOrder: 16,
     },
     {
-        ratings: " 92% on Rotten Tomatoes",
+        ratings: [],
         watchlists: [],
         title: "Shang-Chi and the Legend of the Ten Rings",
         summary: "Shang-Chi and The Legend of The Ten Rings stars Simu Liu as Shang- Chi, who must confront the past he thought he left behind when he is drawn into the web of the mysterious Ten Rings organization.The film also stars Tony Leung as Wenwu, Awkwafina as Shang- Chi's friend Katy and Michelle Yeoh as Jiang Nan, as well as Fala Chen, Meng'er Zhang, Florian Munteanu and Ronny Chieng. ",
@@ -18,7 +18,7 @@ const phase4 = [
         chronologicalOrder: 25,
     },
     {
-        ratings: " 47% on Rotten Tomatoes",
+        ratings: [],
         watchlists: [],
         title: "Eternals",
         summary: "Eternals features an exciting new team of Super Heroes in the Marvel Cinematic Universe, ancient aliens who have been living on Earth in secret for thousands of years. Following the events of Avengers: Endgame, an unexpected tragedy forces them out of the shadows to reunite against mankind's most ancient enemy, the Deviants.",
@@ -27,7 +27,7 @@ const phase4 = [
         chronologicalOrder: 26,
     },
     {
-        ratings: " 92% on Rotten Tomatoes",
+        ratings: [],
         watchlists: [],
         title: "Spider-Man: No Way Home",
         summary: "For the first time in the cinematic history of Spider-Man, our friendly neighborhood hero's identity is revealed, bringing his Super Hero responsibilities into conflict with his normal life and putting those he cares about most at risk. When he enlists Doctor Strange's help to restore his secret, the spell tears a hole in their world, releasing the most powerful villains who've ever fought a Spider-Man in any universe. Now, Peter will have to overcome his greatest challenge yet, which will not only forever alter his own future but the future of the Multiverse.",
@@ -36,7 +36,7 @@ const phase4 = [
         chronologicalOrder: 27,
     },
     {
-        ratings: " 74% on Rotten Tomatoes",
+        ratings: [],
         watchlists: [],
         title: "Doctor Strange in the Multiverse of Madness",
         summary: " The MCU unlocks the Multiverse and pushes its boundaries further than ever before. Journey into the unknown with Doctor Strange, who, with the help of mystical allies both old and new, traverses the mind-bending and dangerous alternate realities of the Multiverse to confront a mysterious new adversary.",
@@ -45,7 +45,7 @@ const phase4 = [
         chronologicalOrder: 28,
     },
     {
-        ratings: " 63% on Rotten Tomatoes",
+        ratings: [],
         watchlists: [],
         title: "Thor: Love and Thunder",
         summary: "We find Thor (Chris Hemsworth) on a journey unlike anything he's ever faced -- a quest for inner peace. But his retirement is interrupted by a galactic killer known as Gorr the God Butcher (Christian Bale), who seeks the extinction of the gods. To combat the threat, Thor enlists the help of King Valkyrie (Tessa Thompson), Korg (Taika Waititi) and ex-girlfriend Jane Foster (Natalie Portman), who -- to Thor's surprise -- inexplicably wields his magical hammer, Mjolnir, as the Mighty Thor. Together, they embark upon a harrowing cosmic adventure to uncover the mystery of the God Butcher's vengeance and stop him before it's too late.",
@@ -54,7 +54,7 @@ const phase4 = [
         chronologicalOrder: 29,
     },
     {
-        ratings: " 84% on Rotten Tomatoes",
+        ratings: [],
         watchlists: [],
         title: "Black Panther: Wakanda Forever",
         summary: " Queen Ramonda (Angela Bassett), Shuri (Letitia Wright), M'Baku (Winston Duke), Okoye (Danai Gurira) and the Dora Milaje (including Florence Kasumba) fight to protect their nation from intervening world powers in the wake of King T'Challa's death. As the Wakandans strive to embrace their next chapter, the heroes must band together with the help of War Dog Nakia (Lupita Nyong'o) and Everett Ross (Martin Freeman) and forge a new path for the kingdom of Wakanda.",
