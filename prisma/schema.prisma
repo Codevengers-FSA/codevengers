@@ -34,12 +34,20 @@ model Movie {
   id                 Int         @id @default(autoincrement())
   title              String      @unique
   summary            String
-  ratings            String
+  ratings            Rating[]
   image              String
   watchlists         Watchlist[]
   comments           Comment[]
   releaseDate        DateTime
   chronologicalOrder Int
+}
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  rating    Int      
+  userId    Int      
+  movieId   Int      
+  movie     Movie    @relation(fields: [movieId], references: [id])
 }
 
 model Comment {
