@@ -19,12 +19,13 @@ const authenticateUser = (req, res, next) => {
   }
 };
 
+// Get all comments for a movie
 router.get('/movies/:movieId/comments', async (req, res, next) => {
   const { movieId } = req.params;
   try {
     const comments = await prisma.comment.findMany({
       where: { movieId: parseInt(movieId, 10) },
-      include: { user: true, replies: true },
+      include: { user: true, replies: true }, // Including replies in the response
     });
     res.json(comments);
   } catch (e) {
@@ -32,8 +33,9 @@ router.get('/movies/:movieId/comments', async (req, res, next) => {
   }
 });
 
+// Add a new comment for a movie
 router.post('/movies/:movieId/comments', authenticateUser, async (req, res, next) => {
-  const { movieId } = req.params; 
+  const { movieId } = req.params;
   const { text, parentId } = req.body;
   const userId = req.user.id;
 
@@ -44,8 +46,8 @@ router.post('/movies/:movieId/comments', authenticateUser, async (req, res, next
       data: {
         movieId: parseInt(movieId, 10),
         userId,
-        text, 
-        parentId, 
+        text,
+        parentId, // Handle parentId for nested comments
       },
     });
     res.status(201).json(newComment);
@@ -54,6 +56,7 @@ router.post('/movies/:movieId/comments', authenticateUser, async (req, res, next
   }
 });
 
+// Update an existing comment
 router.put('/comments/:id', authenticateUser, async (req, res, next) => {
   const { id } = req.params;
   const { text } = req.body;
@@ -82,6 +85,7 @@ router.put('/comments/:id', authenticateUser, async (req, res, next) => {
   }
 });
 
+// Delete a comment
 router.delete('/comments/:id', authenticateUser, async (req, res, next) => {
   const { id } = req.params;
   const userId = req.user.id;
@@ -113,6 +117,7 @@ router.delete('/comments/:id', authenticateUser, async (req, res, next) => {
   }
 });
 
+// Delete a reply
 router.delete('/comments/replies/:id', authenticateUser, async (req, res, next) => {
   const { id } = req.params;
   const userId = req.user.id;
@@ -140,6 +145,36 @@ router.delete('/comments/replies/:id', authenticateUser, async (req, res, next) 
     res.status(200).json({ message: 'Reply deleted successfully' });
   } catch (e) {
     console.error(e);
+    next(e);
+  }
+});
+
+// Add a reply to a comment
+router.post('/comments/:id/replies', authenticateUser, async (req, res, next) => {
+  const { id } = req.params;
+  const { text } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const parentComment = await prisma.comment.findUnique({
+      where: { id: parseInt(id, 10) },
+    });
+
+    if (!parentComment) {
+      return res.status(404).json({ message: 'Parent comment not found' });
+    }
+
+    const newReply = await prisma.comment.create({
+      data: {
+        text,
+        userId,
+        parentId: parseInt(id, 10),
+        movieId: parentComment.movieId,
+      },
+    });
+
+    res.status(201).json(newReply);
+  } catch (e) {
     next(e);
   }
 });

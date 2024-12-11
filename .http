@@ -47,7 +47,7 @@ Authorization: Bearer {{token}}
 }
 
 ### Update a comment
-PUT {{host}}/comments/comments/15
+PUT {{host}}/comments/comments/26
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -55,13 +55,22 @@ Authorization: Bearer {{token}}
   "text": "I changed my mind when I got to the end"
 }
 
+### Post a Reply to a Comment
+POST {{host}}/comments/comments/25/replies
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "text": "I agree! The ending was phenomenal!"
+}
+
 ### Delete a comment
-DELETE {{host}}/comments/comments/15
+DELETE {{host}}/comments/comments/26
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Delete a reply
-DELETE {{host}}/comments/comments/replies/16
+DELETE {{host}}/comments/comments/replies/29
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
