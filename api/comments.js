@@ -25,7 +25,7 @@ router.get('/movies/:movieId/comments', async (req, res, next) => {
   try {
     const comments = await prisma.comment.findMany({
       where: { movieId: parseInt(movieId, 10) },
-      include: { user: true, replies: true }, // Including replies in the response
+      include: { user: { select: { id: true, username: true } }, replies: { include: { user: { select: { id: true, username: true } } } } }, // Fetch user details
     });
     res.json(comments);
   } catch (e) {
