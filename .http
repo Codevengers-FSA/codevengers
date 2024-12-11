@@ -33,7 +33,7 @@ GET {{host}}/movies/3
 
 ### Get comments for a movie
 @token = {{login.response.body.token}}
-GET {{host}}/comments/movies/1/comments
+GET {{host}}/comments/movies/2/comments
 
 ### Post a new comment
 POST {{host}}/comments/movies/1/comments
