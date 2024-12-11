@@ -25,13 +25,15 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 router.get('/:id/comments', async (req, res, next) => {
-  const userId = req.params.id;
+  const userId = parseInt(req.params.id, 10);
 
   try{
-    const userComments = await db.query('SELECT * FROM comments WHERE userId = $1', [userId]);
-    res.json(userComments.rows);
+    const userComments = await prisma.comment.findMany({
+      where: { userId },
+    });
+    res.json(userComments);
   } catch (error) {
-    res.status(500).json({error: 'Error fetching user comments'});
+    next(error);
   }
 })
 
