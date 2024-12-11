@@ -6,7 +6,7 @@ const cors = require(`cors`);
 
 // CORS handling
 app.use(cors({
-  origin: 'https://codevengers.netlify.app',
+  origin: '*', //https://codevengers.netlify.app 
   allowedHeaders: ['Content-Type', 'Authorization'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
