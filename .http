@@ -5,79 +5,7 @@ POST {{host}}/auth/register
 Content-Type: application/json
 
 {
-    "username":"iLuvMarvel8",
-    "password":"1234"
-}
-
-### Login
-# @name login
-POST {{host}}/auth/login
-Content-Type: application/json
-
-{
-    "username": "iLuvMarvel", 
-    "password": "1234"
-}
-### Get all users 
-GET {{host}}/users
-
-### Get a user by id
-GET {{host}}/users/6
-
-### Get all movies 
-GET {{host}}/movies
-
-### Get movie by ID
-GET {{host}}/movies/3
-
-### Get comments for a movie
-GET {{host}}/comments/movies/1/comments
-
-### Post a new comment
-POST {{host}}/comments/movies/1/comments
-Content-Type: application/json
-
-{
-  "userId": 6,
-  "text": "This is an amazing movie!",
-  "parentId": null
-}
-
-### Update a comment
-PUT {{host}}/comments/comments/1
-Content-Type: application/json
-
-{
-  "text": "I changed my mind when I got to the end"
-}
-
-### Delete a comment
-DELETE {{host}}/comments/comments/1
-
-### Get a user's watchlist
-GET {{host}}/watchlist/1
-
-### Add a movie to the user's watchlist
-POST {{host}}/watchlist
-Content-Type: application/json
-
-{
-    "userId": 1,
-    "movieId": 3,
-    "title": "Iron Man 2"
-}
-
-### Remove a movie from the user's watchlist
-DELETE {{host}}/watchlist/
-
-@host = http://localhost:3000
-
-### Register as a user
-POST {{host}}/auth/register
-Content-Type: application/json
-
-{
-    "username": "iLuvMarvel628",
+    "username": "testuser",
     "password": "1234"
 }
 
@@ -87,7 +15,7 @@ POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "yarn", 
+    "username": "testuser", 
     "password": "1234"
 }
 
@@ -110,6 +38,7 @@ GET {{host}}/comments/movies/1/comments
 ### Post a new comment
 POST {{host}}/comments/movies/1/comments
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "userId": 6,
@@ -118,21 +47,21 @@ Content-Type: application/json
 }
 
 ### Update a comment
-PUT {{host}}/comments/comments/1
+PUT {{host}}/comments/comments/15
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "text": "I changed my mind when I got to the end"
 }
 
-
 ### Delete a comment
-DELETE {{host}}/comments/movies/1/comments/15
+DELETE {{host}}/comments/comments/15
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Delete a reply
-DELETE {{host}}/comments/movies/1/comments/15/replies/16
+DELETE {{host}}/comments/comments/replies/16
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
