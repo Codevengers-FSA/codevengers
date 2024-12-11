@@ -65,13 +65,13 @@ router.put('/comments/:id', authenticate, async (req, res, next) => {
   }
 });
 
-router.delete('/comments/:id', authenticate, async (req, res, next) => {
-  const { id } = req.params;
+router.delete('/movies/:movieId/comments/:commentId', authenticate, async (req, res, next) => {
+  const { movieId, commentId } = req.params;
   const userId = req.user.id;
 
   try {
     const comment = await prisma.comment.findUnique({
-      where: { id: parseInt(id, 10) },
+      where: { id: parseInt(commentId, 10) },
     });
 
     if (!comment) {
@@ -83,29 +83,40 @@ router.delete('/comments/:id', authenticate, async (req, res, next) => {
     }
 
     await prisma.comment.delete({
-      where: { id: parseInt(id, 10) },
+      where: { id: parseInt(commentId, 10) },
     });
-    res.status(204).send();
+
+    res.status(200).json({ message: 'Comment deleted successfully' });
   } catch (e) {
     next(e);
   }
 });
 
-router.post('/movies/:movieId/comments/:commentId/replies', authenticate, async (req, res, next) => {
-  const { movieId, commentId } = req.params;
-  const { text } = req.body;
-  const userId = req.user.id;
+router.delete('/movies/:movieId/comments/:commentId/replies/:replyId', authenticate, async (req, res, next) => {
+  const { movieId, commentId, replyId } = req.params;
 
   try {
-    const newReply = await prisma.comment.create({
-      data: {
-        movieId: parseInt(movieId, 10),
-        userId,
-        text,
-        parentId: parseInt(commentId, 10),
-      },
+    const reply = await prisma.comment.findUnique({
+      where: { id: parseInt(replyId, 10) },
     });
-    res.status(201).json(newReply);
+
+    if (!reply) {
+      return res.status(404).json({ message: "Reply not found" });
+    }
+    
+    if (reply.parentId !== parseInt(commentId, 10)) {
+      return res.status(404).json({ message: "Reply not associated with this comment" });
+    }
+
+    if (reply.userId !== req.user.id) {
+      return res.status(403).json({ message: "Unauthorized to delete this reply" });
+    }
+    
+    await prisma.comment.delete({
+      where: { id: parseInt(replyId, 10) },
+    });
+
+    res.status(200).json({ message: "Reply deleted successfully" });
   } catch (e) {
     next(e);
   }
