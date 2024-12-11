@@ -87,7 +87,7 @@ POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "iLuvMarvel628", 
+    "username": "yarn", 
     "password": "1234"
 }
 
@@ -125,8 +125,16 @@ Content-Type: application/json
   "text": "I changed my mind when I got to the end"
 }
 
+
 ### Delete a comment
-DELETE {{host}}/comments/comments/1
+DELETE {{host}}/comments/movies/1/comments/15
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Delete a reply
+DELETE {{host}}/comments/movies/1/comments/15/replies/16
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Get a user's watchlist
 GET {{host}}/watchlist/1

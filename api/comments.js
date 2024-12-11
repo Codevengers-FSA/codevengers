@@ -65,14 +65,17 @@ router.put('/comments/:id', authenticate, async (req, res, next) => {
   }
 });
 
-router.delete('/movies/:movieId/comments/:commentId', authenticate, async (req, res, next) => {
-  const { movieId, commentId } = req.params;
+router.delete('/comments/:id', authenticate, async (req, res, next) => {
+  const { id } = req.params;
   const userId = req.user.id;
+  console.log("Delete Comment - Params:", req.params, "User ID:", userId);
 
   try {
     const comment = await prisma.comment.findUnique({
-      where: { id: parseInt(commentId, 10) },
+      where: { id: parseInt(id, 10) },
     });
+
+    console.log("Comment Found:", comment);
 
     if (!comment) {
       return res.status(404).json({ message: 'Comment not found' });
@@ -83,41 +86,43 @@ router.delete('/movies/:movieId/comments/:commentId', authenticate, async (req, 
     }
 
     await prisma.comment.delete({
-      where: { id: parseInt(commentId, 10) },
+      where: { id: parseInt(id, 10) },
     });
 
     res.status(200).json({ message: 'Comment deleted successfully' });
   } catch (e) {
+    console.error(e);
     next(e);
   }
 });
 
-router.delete('/movies/:movieId/comments/:commentId/replies/:replyId', authenticate, async (req, res, next) => {
-  const { movieId, commentId, replyId } = req.params;
+router.delete('/replies/:id', authenticate, async (req, res, next) => {
+  const { id } = req.params;
+  const userId = req.user.id;
+  console.log("Delete Reply - Params:", req.params, "User ID:", userId);
 
   try {
     const reply = await prisma.comment.findUnique({
-      where: { id: parseInt(replyId, 10) },
+      where: { id: parseInt(id, 10) },
     });
+
+    console.log("Reply Found:", reply);
 
     if (!reply) {
-      return res.status(404).json({ message: "Reply not found" });
-    }
-    
-    if (reply.parentId !== parseInt(commentId, 10)) {
-      return res.status(404).json({ message: "Reply not associated with this comment" });
+      return res.status(404).json({ message: 'Reply not found' });
     }
 
-    if (reply.userId !== req.user.id) {
-      return res.status(403).json({ message: "Unauthorized to delete this reply" });
+    if (reply.userId !== userId) {
+      return res.status(403).json({ message: 'Unauthorized to delete this reply' });
     }
-    
+
     await prisma.comment.delete({
-      where: { id: parseInt(replyId, 10) },
+      where: { id: parseInt(id, 10) },
     });
 
-    res.status(200).json({ message: "Reply deleted successfully" });
+    res.status(200).json({ message: 'Reply deleted successfully' });
   } catch (e) {
+    console.error(e);
     next(e);
   }
 });
