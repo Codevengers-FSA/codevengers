@@ -15,7 +15,7 @@ POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "testuser", 
+    "username": "yarn", 
     "password": "1234"
 }
 
@@ -23,7 +23,10 @@ Content-Type: application/json
 GET {{host}}/users
 
 ### Get a user by id
-GET {{host}}/users/6
+GET {{host}}/users/231
+
+### Get user comments by user id
+GET {{host}}/users/231/comments
 
 ### Get all movies 
 GET {{host}}/movies
@@ -33,7 +36,7 @@ GET {{host}}/movies/3
 
 ### Get comments for a movie
 @token = {{login.response.body.token}}
-GET {{host}}/comments/movies/2/comments
+GET {{host}}/comments/movies/1/comments
 
 ### Post a new comment
 POST {{host}}/comments/movies/1/comments

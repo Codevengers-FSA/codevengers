@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const prisma = require("../prisma");
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
 
 // Import movie data from phases
 const phase1 = require("../prisma/phases/phase1");
