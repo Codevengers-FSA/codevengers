@@ -12,15 +12,19 @@ const createToken = (id) => {
 
 router.use(async (req, res, next) => {
   const authHeader = req.headers.authorization;
+  console.log("Authorization Header:", authHeader);
   const token = authHeader?.slice(7);
+  console.log("Extracted Token:", token);
   if (!token) return next();
 
   try {
     const { id } = jwt.verify(token, JWT_SECRET);
+    console.log("Decoded Token ID:", id);
     const user = await prisma.user.findUniqueOrThrow({ where: { id } });
     req.user = user;
     next();
   } catch (e) {
+    console.error("Error in Auth Middleware:", e);
     next(e);
   }
 });
@@ -69,10 +73,26 @@ router.post("/login", async (req, res, next) => {
 });
 
 const authenticate = (req, res, next) => {
-  if (req.user) {
+  const authHeader = req.headers.authorization;
+  console.log("Authorization Header:", authHeader); 
+
+  if (!authHeader) return next({ status: 401, message: "You must be logged in" });
+
+  const token = authHeader.slice(7);
+  console.log("Extracted Token:", token);
+
+  if (!token) return next({ status: 401, message: "You must be logged in" });
+
+  try {
+    const { id } = jwt.verify(token, JWT_SECRET);
+    req.user = { id };
     next();
-  } else {
-    next({ status: 401, message: "You must be logged in" });
+  } catch (e) {
+    if (e.name === "TokenExpiredError") {
+      return next({ status: 401, message: "Token expired, please log in again" });
+    }
+    console.error("Error in Auth Middleware:", e);
+    next(e);
   }
 };
 

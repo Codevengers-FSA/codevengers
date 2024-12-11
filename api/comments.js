@@ -1,8 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const prisma = require("../prisma");
+const jwt = require("jsonwebtoken");
 
-const { authenticate } = require("../api/auth");
+const authenticateUser = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Decoded token:', decoded);
+
+    req.user = decoded;
+    next();
+  } catch (err) {
+    res.status(403).json({ error: 'Invalid token.' });
+  }
+};
 
 router.get('/movies/:movieId/comments', async (req, res, next) => {
   const { movieId } = req.params;
@@ -17,10 +32,12 @@ router.get('/movies/:movieId/comments', async (req, res, next) => {
   }
 });
 
-router.post('/movies/:movieId/comments', authenticate, async (req, res, next) => {
+router.post('/movies/:movieId/comments', authenticateUser, async (req, res, next) => {
   const { movieId } = req.params; 
   const { text, parentId } = req.body;
   const userId = req.user.id;
+
+  console.log(req.user.id)
 
   try {
     const newComment = await prisma.comment.create({
@@ -37,7 +54,7 @@ router.post('/movies/:movieId/comments', authenticate, async (req, res, next) =>
   }
 });
 
-router.put('/comments/:id', authenticate, async (req, res, next) => {
+router.put('/comments/:id', authenticateUser, async (req, res, next) => {
   const { id } = req.params;
   const { text } = req.body;
   const userId = req.user.id;
@@ -65,7 +82,7 @@ router.put('/comments/:id', authenticate, async (req, res, next) => {
   }
 });
 
-router.delete('/comments/:id', authenticate, async (req, res, next) => {
+router.delete('/comments/:id', authenticateUser, async (req, res, next) => {
   const { id } = req.params;
   const userId = req.user.id;
   console.log("Delete Comment - Params:", req.params, "User ID:", userId);
@@ -91,12 +108,12 @@ router.delete('/comments/:id', authenticate, async (req, res, next) => {
 
     res.status(200).json({ message: 'Comment deleted successfully' });
   } catch (e) {
-    console.error(e);
+    console.error("Error in DELETE /comments/:id:", e);
     next(e);
   }
 });
 
-router.delete('/replies/:id', authenticate, async (req, res, next) => {
+router.delete('/comments/replies/:id', authenticateUser, async (req, res, next) => {
   const { id } = req.params;
   const userId = req.user.id;
   console.log("Delete Reply - Params:", req.params, "User ID:", userId);
