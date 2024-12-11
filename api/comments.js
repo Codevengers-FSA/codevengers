@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const prisma = require("../prisma");
 
-const authenticate = require("../middleware/authenticate");
+const { authenticate } = require("../api/auth");
 
 router.get('/movies/:movieId/comments', async (req, res, next) => {
   const { movieId } = req.params;
