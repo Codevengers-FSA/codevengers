@@ -134,14 +134,19 @@ router.post('/comments/:id/replies', authenticateUser, async (req, res, next) =>
   const { text } = req.body;
   const userId = req.user.id;
 
+  console.log("Request to add reply - Params:", req.params, "Body:", req.body, "User ID:", userId);
+
   try {
     const parentComment = await prisma.comment.findUnique({
       where: { id: parseInt(id, 10) },
     });
 
     if (!parentComment) {
+      console.log("Parent comment not found for ID:", id);
       return res.status(404).json({ message: 'Parent comment not found' });
     }
+
+    console.log("Parent comment found:", parentComment);
 
     const newReply = await prisma.comment.create({
       data: {
@@ -152,10 +157,12 @@ router.post('/comments/:id/replies', authenticateUser, async (req, res, next) =>
       },
     });
 
+    console.log("New reply created:", newReply);
+
     res.status(201).json(newReply);
   } catch (e) {
-    console.error('Error in POST /comments/:id/replies:', e);
-    next(e);
+    console.error('Error in POST /comments/:id/replies:', e.message);
+    res.status(500).json({ error: 'Internal Server Error', message: e.message });
   }
 });
 
@@ -170,13 +177,15 @@ router.delete('/comments/replies/:id', authenticateUser, async (req, res, next) 
       where: { id: parseInt(id, 10) },
     });
 
-    console.log("Reply Found:", reply);
-
     if (!reply) {
+      console.log("Reply not found for ID:", id);
       return res.status(404).json({ message: 'Reply not found' });
     }
 
+    console.log("Reply found:", reply);
+
     if (reply.userId !== userId) {
+      console.log("User not authorized to delete reply for ID:", id);
       return res.status(403).json({ message: 'Unauthorized to delete this reply' });
     }
 
@@ -184,10 +193,12 @@ router.delete('/comments/replies/:id', authenticateUser, async (req, res, next) 
       where: { id: parseInt(id, 10) },
     });
 
+    console.log("Reply deleted successfully:", id);
+
     res.status(200).json({ message: 'Reply deleted successfully' });
   } catch (e) {
-    console.error(e);
-    next(e);
+    console.error('Error in DELETE /comments/replies/:id:', e.message);
+    res.status(500).json({ error: 'Internal Server Error', message: e.message });
   }
 });
 
