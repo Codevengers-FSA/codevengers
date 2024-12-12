@@ -47,10 +47,21 @@ router.post('/movies/:movieId/comments', authenticateUser, async (req, res, next
         movieId: parseInt(movieId, 10),
         userId,
         text,
-        parentId, // Handle parentId for nested comments
+        parentId,
       },
     });
-    res.status(201).json(newComment);
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, username: true },
+    });
+
+    const commentWithUser = {
+      ...newComment,
+      user,
+    };
+
+    res.status(201).json(commentWithUser);
   } catch (e) {
     next(e);
   }
