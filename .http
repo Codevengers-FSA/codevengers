@@ -105,3 +105,11 @@ Authorization: Bearer {{token}}
 ### Get movie ratings
 GET {{host}}/ratings/movies/3/ratings
 Authorization: Bearer {{token}}
+
+### Recommend movies based on input
+POST {{host}}/ai-movies/recommend-movies
+Content-Type: application/json
+
+{
+    "movieInput": "Dr. Strange"
+}
