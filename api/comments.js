@@ -155,6 +155,14 @@ router.post('/comments/:id/replies', authenticateUser, async (req, res, next) =>
         parentId: parseInt(id, 10),
         movieId: parentComment.movieId,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true
+          }
+        }
+      }
     });
 
     console.log("New reply created:", newReply);
