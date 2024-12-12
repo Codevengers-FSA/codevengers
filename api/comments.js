@@ -128,6 +128,37 @@ router.delete('/comments/:id', authenticateUser, async (req, res, next) => {
   }
 });
 
+// Add a reply to a comment
+router.post('/comments/:id/replies', authenticateUser, async (req, res, next) => {
+  const { id } = req.params;
+  const { text } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const parentComment = await prisma.comment.findUnique({
+      where: { id: parseInt(id, 10) },
+    });
+
+    if (!parentComment) {
+      return res.status(404).json({ message: 'Parent comment not found' });
+    }
+
+    const newReply = await prisma.comment.create({
+      data: {
+        text,
+        userId,
+        parentId: parseInt(id, 10),
+        movieId: parentComment.movieId,
+      },
+    });
+
+    res.status(201).json(newReply);
+  } catch (e) {
+    console.error('Error in POST /comments/:id/replies:', e);
+    next(e);
+  }
+});
+
 // Delete a reply
 router.delete('/comments/replies/:id', authenticateUser, async (req, res, next) => {
   const { id } = req.params;
@@ -156,36 +187,6 @@ router.delete('/comments/replies/:id', authenticateUser, async (req, res, next) 
     res.status(200).json({ message: 'Reply deleted successfully' });
   } catch (e) {
     console.error(e);
-    next(e);
-  }
-});
-
-// Add a reply to a comment
-router.post('/comments/:id/replies', authenticateUser, async (req, res, next) => {
-  const { id } = req.params;
-  const { text } = req.body;
-  const userId = req.user.id;
-
-  try {
-    const parentComment = await prisma.comment.findUnique({
-      where: { id: parseInt(id, 10) },
-    });
-
-    if (!parentComment) {
-      return res.status(404).json({ message: 'Parent comment not found' });
-    }
-
-    const newReply = await prisma.comment.create({
-      data: {
-        text,
-        userId,
-        parentId: parseInt(id, 10),
-        movieId: parentComment.movieId,
-      },
-    });
-
-    res.status(201).json(newReply);
-  } catch (e) {
     next(e);
   }
 });

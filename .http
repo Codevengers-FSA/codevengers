@@ -50,7 +50,7 @@ Authorization: Bearer {{token}}
 }
 
 ### Update a comment
-PUT {{host}}/comments/comments/26
+PUT {{host}}/comments/comments/5
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -59,7 +59,7 @@ Authorization: Bearer {{token}}
 }
 
 ### Post a Reply to a Comment
-POST {{host}}/comments/comments/25/replies
+POST {{host}}/comments/comments/74/replies
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -73,7 +73,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Delete a reply
-DELETE {{host}}/comments/comments/replies/29
+DELETE {{host}}/comments/comments/replies/81
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
