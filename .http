@@ -113,3 +113,16 @@ Content-Type: application/json
 {
     "movieInput": "Dr. Strange"
 }
+
+### Get all user's watched movies
+GET {{host}}/users/231/watched
+Authorization: Bearer {{token}}
+
+### Mark a movie as watched
+POST {{host}}/users/231/watched
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "movieId": 3
+}
