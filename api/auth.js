@@ -46,7 +46,7 @@ router.post("/register", async (req, res, next) => {
     });
 
     const token = createToken(user.id);
-    res.status(201).json({ token });
+    res.status(201).json({ token, user });
   } catch (e) {
     next(e);
   }
@@ -66,7 +66,7 @@ router.post("/login", async (req, res, next) => {
     }
 
     const token = createToken(user.id);
-    res.json({ token });
+    res.json({ token, user });
   } catch (e) {
     next(e);
   }
