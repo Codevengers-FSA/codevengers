@@ -14,11 +14,11 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
-  const { id } = req.params;
+router.get("/:username", async (req, res, next) => {
+  const { username } = req.params;
   try {
     const user = await prisma.user.findUniqueOrThrow({
-      where: { id: +id },
+      where: { username: username },
     });
     res.json(user);
   } catch (e) {
@@ -26,13 +26,18 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.get('/:id/comments', async (req, res, next) => {
-  const userId = parseInt(req.params.id, 10);
+router.get('/:username/comments', async (req, res, next) => {
+  const { username } = req.params;
 
   try {
-    const userComments = await prisma.comment.findMany({
-      where: { userId },
+    const user = await prisma.user.findUniqueOrThrow({
+      where: { username: username },
     });
+
+    const userComments = await prisma.comment.findMany({
+      where: { userId: user.id },
+    });
+
     res.json(userComments);
   } catch (error) {
     next(error);
@@ -40,13 +45,17 @@ router.get('/:id/comments', async (req, res, next) => {
 });
 
 // "I've watched this" functionality
-router.post('/:id/watched', authenticate, async (req, res, next) => {
-  const userId = parseInt(req.params.id, 10);
+router.post('/:username/watched', authenticate, async (req, res, next) => {
+  const { username } = req.params;
   const { movieId } = req.body;
 
   try {
-    const user = await prisma.user.update({
-      where: { id: userId },
+    const user = await prisma.user.findUniqueOrThrow({
+      where: { username: username },
+    });
+
+    const updatedUser = await prisma.user.update({
+      where: { id: user.id },
       data: {
         watchedMovies: {
           push: parseInt(movieId, 10), // Ensure movieId is an integer
@@ -54,19 +63,19 @@ router.post('/:id/watched', authenticate, async (req, res, next) => {
       },
     });
 
-    res.status(200).json(user);
+    res.status(200).json(updatedUser);
   } catch (error) {
     next(error);
   }
 });
 
 // Get watched movies
-router.get('/:id/watched', authenticate, async (req, res, next) => {
-  const userId = parseInt(req.params.id, 10);
+router.get('/:username/watched', authenticate, async (req, res, next) => {
+  const { username } = req.params;
 
   try {
     const user = await prisma.user.findUniqueOrThrow({
-      where: { id: userId },
+      where: { username: username },
       select: {
         watchedMovies: true,
       },
