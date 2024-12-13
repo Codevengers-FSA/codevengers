@@ -25,11 +25,46 @@ router.get('/movies/:movieId/comments', async (req, res, next) => {
   try {
     const comments = await prisma.comment.findMany({
       where: { movieId: parseInt(movieId, 10) },
-      include: { user: { select: { id: true, username: true } }, replies: { include: { user: { select: { id: true, username: true } } } } }, // Fetch user details
+      include: {
+        user: { select: { id: true, username: true } },
+        replies: {
+          include: {
+            user: { select: { id: true, username: true } }
+          }
+        }
+      }
     });
     res.json(comments);
   } catch (e) {
     next(e);
+  }
+});
+
+// Get all comments for a specific user
+router.get('/users/:id/comments', authenticateUser, async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    console.log('Fetching user with ID:', id);
+    const user = await prisma.user.findUniqueOrThrow({
+      where: { id: parseInt(id, 10) }
+    });
+
+    console.log('User found:', user);
+
+    if (user) {
+      const comments = await prisma.comment.findMany({
+        where: { userId: user.id },
+        include: { user: { select: { id: true, username: true } } }
+      });
+      console.log('Comments found:', comments);
+      res.json(comments);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching user comments:', error);
+    res.status(500).json({ error: 'Failed to get comments', details: error.message });
   }
 });
 
@@ -39,7 +74,7 @@ router.post('/movies/:movieId/comments', authenticateUser, async (req, res, next
   const { text, parentId } = req.body;
   const userId = req.user.id;
 
-  console.log(req.user.id)
+  console.log(req.user.id);
 
   try {
     const newComment = await prisma.comment.create({
