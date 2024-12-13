@@ -11,6 +11,11 @@ const PORT = process.env.PORT || 3000;
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+  console.log(`Request for static file: ${req.url}`);
+  next();
+});
+
 // CORS handling
 app.use(
   cors({
