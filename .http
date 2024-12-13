@@ -50,7 +50,7 @@ Authorization: Bearer {{token}}
 }
 
 ### Update a comment
-PUT {{host}}/comments/comments/5
+PUT {{host}}/comments/comments/88
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -115,11 +115,11 @@ Content-Type: application/json
 }
 
 ### Get all user's watched movies
-GET {{host}}/users/231/watched
+GET {{host}}/users/kelsey.avengers/watched
 Authorization: Bearer {{token}}
 
 ### Mark a movie as watched
-POST {{host}}/users/231/watched
+POST {{host}}/users/kelsey.avengers/watched
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
