@@ -17,20 +17,20 @@ const main = async () => {
 
   for (const movie of movies) {
     await prisma.movie.upsert({
-      where: { title: movie.title },
+      where: {
+        title: movie.title,
+      },
       update: {
-        ratings: movie.ratings,
         summary: movie.summary,
         image: movie.image,
-        releaseDate: new Date(movie.releaseDate),
+        releaseDate: movie.releaseDate,
         chronologicalOrder: movie.chronologicalOrder,
       },
       create: {
         title: movie.title,
-        ratings: movie.ratings,
         summary: movie.summary,
         image: movie.image,
-        releaseDate: new Date(movie.releaseDate), 
+        releaseDate: movie.releaseDate,
         chronologicalOrder: movie.chronologicalOrder,
       },
     });
