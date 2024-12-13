@@ -18,7 +18,8 @@ model User {
   username           String      @unique
   password           String
   watchlists         Watchlist[]
-  comments           Comment[]   
+  comments           Comment[]
+  watchedMovies      Int[]
 }
 
 model Watchlist {
