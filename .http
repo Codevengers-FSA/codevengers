@@ -5,7 +5,7 @@ POST {{host}}/auth/register
 Content-Type: application/json
 
 {
-    "username": "testuser",
+    "username": "iron-man-fan",
     "password": "1234"
 }
 
@@ -15,7 +15,7 @@ POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "yarn", 
+    "username": "iron-man-fan", 
     "password": "1234"
 }
 
