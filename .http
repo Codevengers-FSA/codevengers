@@ -23,10 +23,10 @@ Content-Type: application/json
 GET {{host}}/users
 
 ### Get a user by id
-GET {{host}}/users/231
+GET {{host}}/users/testuser
 
 ### Get user comments by user id
-GET {{host}}/users/231/comments
+GET {{host}}/users/testuser/comments
 
 ### Get all movies 
 GET {{host}}/movies
@@ -68,7 +68,7 @@ Authorization: Bearer {{token}}
 }
 
 ### Delete a comment
-DELETE {{host}}/comments/comments/26
+DELETE {{host}}/comments/comments/90
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
