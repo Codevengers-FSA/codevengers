@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { PrismaClient } = require("@prisma/client");
-const { authenticate } = require("../api/auth"); // Import the authenticate middleware
+const { authenticate } = require("../api/auth");
 
 const prisma = new PrismaClient();
 
@@ -49,7 +49,7 @@ router.post('/:id/watched', authenticate, async (req, res, next) => {
       where: { id: userId },
       data: {
         watchedMovies: {
-          push: movieId,
+          push: parseInt(movieId, 10), // Ensure movieId is an integer
         },
       },
     });
