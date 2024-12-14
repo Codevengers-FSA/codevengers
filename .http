@@ -32,7 +32,7 @@ GET {{host}}/users/testuser/comments
 GET {{host}}/movies
 
 ### Get movie by ID
-GET {{host}}/movies/3
+GET {{host}}/movies/6
 
 ### Get comments for a movie
 @token = {{login.response.body.token}}
