@@ -1,9 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const { PrismaClient } = require("@prisma/client");
-const { authenticate } = require("../api/auth");
+//const { authenticateUser } = require("../api/auth");
+const jwt = require("jsonwebtoken");
 
 const prisma = new PrismaClient();
+
+const authenticateUser = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Decoded token:', decoded);
+
+    req.user = decoded;
+    next();
+  } catch (err) {
+    res.status(403).json({ error: 'Invalid token.' });
+  }
+};
 
 router.get("/", async (req, res, next) => {
   try {
@@ -61,7 +78,7 @@ router.get('/:username/comments', async (req, res, next) => {
 });
 
 // "I've watched this" functionality
-router.post('/:username/watched', authenticate, async (req, res, next) => {
+router.post('/:username/watched', authenticateUser, async (req, res, next) => {
   const { username } = req.params;
   const { movieId } = req.body;
 
@@ -94,7 +111,7 @@ router.post('/:username/watched', authenticate, async (req, res, next) => {
 });
 
 // Get watched movies
-router.get('/:username/watched', authenticate, async (req, res, next) => {
+router.get('/:username/watched', authenticateUser, async (req, res, next) => {
   const { username } = req.params;
 
   try {
@@ -118,5 +135,43 @@ router.get('/:username/watched', authenticate, async (req, res, next) => {
     next(error);
   }
 });
+
+
+router.delete('/:username/watched/:movieId', authenticateUser, async (req, res, next) =>{
+  const { username, movieId } = req.params;
+
+    try{
+    console.log(`Fetching user with username: ${username}`);
+    const user = await prisma.user.findUnique({
+      where: { username: username},
+    });
+
+
+    if(!user) {
+      console.log('User not found');
+      return res.status(404).json({ error: 'User not found' });
+    };
+
+    const updatedWatchlist = user.watchedMovies.filter(
+      (id) => id !== parseInt(movieId, 10)
+    );
+
+    const updatedUser = await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        watchlists: updatedWatchlist,
+      },
+    });
+
+
+    console.log('Updated user with new watchlist:', updatedUser);
+    res.status(200).json(updatedWatchlist);
+  } catch (error) {
+    console.error('Error deleting movie from watchlist:', error);
+    res.status(500).json({ error: 'Server error' });
+    next(error)
+  }
+})
+
 
 module.exports = router;
