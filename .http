@@ -44,7 +44,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "userId": 6,
+  "userId": 246,
   "text": "This is an amazing movie!",
   "parentId": null
 }
@@ -78,20 +78,20 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Get a user's watchlist
-GET {{host}}/watchlist/1
+GET {{host}}/watchlist/246
 
 ### Add a movie to the user's watchlist
 POST {{host}}/watchlist
 Content-Type: application/json
 
 {
-    "userId": 1,
+    "userId": 246,
     "movieId": 3,
     "title": "Iron Man 2"
 }
 
 ### Remove a movie from the user's watchlist
-DELETE {{host}}/watchlist/
+DELETE {{host}}/watchlist/3
 
 ### Rate a movie
 POST {{host}}/ratings/movies/3/rate
@@ -115,14 +115,18 @@ Content-Type: application/json
 }
 
 ### Get all user's watched movies
-GET {{host}}/users/kelsey.avengers/watched
+GET {{host}}/users/iron-man-fan/watched
 Authorization: Bearer {{token}}
 
 ### Mark a movie as watched
-POST {{host}}/users/kelsey.avengers/watched
+POST {{host}}/users/iron-man-fan/watched
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "movieId": 3
+    "movieId": 9
 }
+
+### Remove a movie from watched movies
+DELETE {{host}}/users/iron-man-fan/watched/8
+Authorization: Bearer {{token}}
