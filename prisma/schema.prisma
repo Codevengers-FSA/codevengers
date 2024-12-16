@@ -19,7 +19,7 @@ model User {
   password           String
   watchlists         Watchlist[]
   comments           Comment[]
-  watchedMovies      Int[]
+  watched      Int[] @default([])
 }
 
 model Watchlist {

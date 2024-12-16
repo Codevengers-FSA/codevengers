@@ -95,7 +95,7 @@ router.post('/:username/watched', authenticateUser, async (req, res, next) => {
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
-        watchedMovies: {
+        watched: {
           push: parseInt(movieId, 10), // Ensure movieId is an integer
         },
       },
@@ -119,7 +119,7 @@ router.get('/:username/watched', authenticateUser, async (req, res, next) => {
     const user = await prisma.user.findUnique({
       where: { username: username },
       select: {
-        watchedMovies: true,
+        watched: true,
       },
     });
     if (!user) {
@@ -127,8 +127,8 @@ router.get('/:username/watched', authenticateUser, async (req, res, next) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    console.log('Watched movies found:', user.watchedMovies);
-    res.status(200).json(user.watchedMovies);
+    console.log('Watched movies found:', user.watched);
+    res.status(200).json(user.watched);
   } catch (error) {
     console.error('Error fetching watched movies:', error);
     res.status(500).json({ error: 'Server error' });
@@ -152,20 +152,25 @@ router.delete('/:username/watched/:movieId', authenticateUser, async (req, res, 
       return res.status(404).json({ error: 'User not found' });
     };
 
-    const updatedWatchlist = user.watchedMovies.filter(
-      (id) => id !== parseInt(movieId, 10)
-    );
+    const movieIdInt = parseInt(movieId, 10);
+
+    if(!user.watched.includes(movieIdInt)){
+      return res.status(404).json({ error: 'Movie not found in watchlist.'});
+    }
+
+    const updatedWatched = user.watched.filter(
+      (id) => id !== movieIdInt);
 
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
-        watchlists: updatedWatchlist,
+        watched: updatedWatched,
       },
     });
 
 
     console.log('Updated user with new watchlist:', updatedUser);
-    res.status(200).json(updatedWatchlist);
+    res.status(200).json({ message: 'Movie removed from watched list', watched: updatedUser.watched});
   } catch (error) {
     console.error('Error deleting movie from watchlist:', error);
     res.status(500).json({ error: 'Server error' });

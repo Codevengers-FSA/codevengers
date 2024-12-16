@@ -124,9 +124,9 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "movieId": 9
+    "movieId": 6
 }
 
 ### Remove a movie from watched movies
-DELETE {{host}}/users/iron-man-fan/watched/8
+DELETE {{host}}/users/iron-man-fan/watched/9
 Authorization: Bearer {{token}}
