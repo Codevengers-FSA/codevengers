@@ -137,41 +137,39 @@ router.get('/:username/watched', authenticateUser, async (req, res, next) => {
 });
 
 
-router.delete('/:username/watched/:movieId', authenticateUser, async (req, res, next) =>{
+router.delete('/:username/watched/:movieId', authenticateUser, async (req, res, next) => {
   const { username, movieId } = req.params;
 
-    try{
+  try {
     console.log(`Fetching user with username: ${username}`);
     const user = await prisma.user.findUnique({
-      where: { username: username},
+      where: { username: username },
     });
 
-
-    if(!user) {
+    if (!user) {
       console.log('User not found');
       return res.status(404).json({ error: 'User not found' });
-    };
+    }
 
-    const updatedWatchlist = user.watchedMovies.filter(
+    const updatedWatchedMovies = user.watchedMovies.filter(
       (id) => id !== parseInt(movieId, 10)
     );
 
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
-        watchlists: updatedWatchlist,
+        watchedMovies: updatedWatchedMovies, // Correctly updating watchedMovies
       },
     });
 
-
-    console.log('Updated user with new watchlist:', updatedUser);
-    res.status(200).json(updatedWatchlist);
+    console.log('Updated watchedMovies:', updatedUser.watchedMovies);
+    res.status(200).json(updatedUser.watchedMovies);
   } catch (error) {
-    console.error('Error deleting movie from watchlist:', error);
+    console.error('Error deleting movie from watchedMovies:', error);
     res.status(500).json({ error: 'Server error' });
-    next(error)
+    next(error);
   }
-})
+});
 
 
 module.exports = router;
